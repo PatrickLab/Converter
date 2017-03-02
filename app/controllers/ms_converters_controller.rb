@@ -22,7 +22,7 @@ class MsConvertersController < ApplicationController
       redirect_to @converter_ms, notice: "The sheet music #{@converter_ms.name}
        has been uploaded."
     else
-      render "new"
+      render 'new'
     end
   end
 
@@ -40,7 +40,8 @@ class MsConvertersController < ApplicationController
   end
 
   private
-    def ms_converter_params
+
+  def ms_converter_params
     params.require(:ms_converter).permit(:name, :attachment)
   end
 end
