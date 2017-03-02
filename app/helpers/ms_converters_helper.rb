@@ -1,26 +1,25 @@
 module MsConvertersHelper
+  # ignore this
+  # @ms_converter = MsConverter.find(params[:id])
 
-  #ignore this
-  #@ms_converter = MsConverter.find(params[:id])
+  part_exists = true
+  part_amount = 0
+  part_array = []
 
-  partExists = true
-  partAmount = 0
-  partArray = []
+  file = # @ms_converter.attachment.read
 
-  file = #@ms_converter.attachment.read
+    while part_exists
 
-  while partExists
+    if (!(file =~ /Part/) == nil) && (!(file =~ /<\/Part>/) == nil)
+      part_index = file =~ /Part/
+      end_part_index = (file =~ /<\/Part>/) + 7
 
-    if ((file =~ /Part/) != nil) && ((file =~ /<\/Part>/) != nil)
-      partIndex = file =~ /Part/
-      endPartIndex = (file =~ /<\/Part>/) + 7
-
-      subFile = file.slice!(partIndex...endPartIndex)
-      partAmount += 1
-      partArray.push(subFile)
+      sub_file = file.slice!(part_index...end_part_index)
+      part_amount += 1
+      part_array.push(subFile)
 
     elsif ((file =~ /Part/) == nil) || ((file =~ /<\/Part>/) == nil)
-      partExists = false
+      part_exists = false
 
     end
 
