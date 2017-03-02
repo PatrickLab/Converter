@@ -1,0 +1,30 @@
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'vendor/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'tmp/**/*'
+    - !ruby/regexp /old_and_unused\.rb$/
+  TargetRubyVersion: 2.3
+
+Style/Encoding:
+  EnforcedStyle: when_needed
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+
+Metrics/LineLength:
+  Max: 80
