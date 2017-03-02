@@ -1,13 +1,13 @@
 module MsConvertersHelper
 
   #ignore this
-  #@ms_converter = MsConverter.find(params[:id])
+  #@converter_ms = MsConverter.find(params[:id])
 
   partExists = true
   partAmount = 0
   partArray = []
 
-  file = #@ms_converter.attachment.read
+  file = #@converter_ms.attachment.read
 
   while partExists
 

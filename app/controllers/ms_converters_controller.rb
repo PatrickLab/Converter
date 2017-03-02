@@ -1,31 +1,41 @@
+# MuseScore Controller
+# * This controller offer facilities to
+# * easily upload and manage partitions
+# * written in MuseScore format
 class MsConvertersController < ApplicationController
+
+  # Returns all the MuseScore converters
   def index
-    @ms_converters = MsConverter.all
+    @converter_ms_all = MsConverter.all
   end
 
+  # Creates a new MuseScore converter
   def new
-    @ms_converter = MsConverter.new
+    @converter_ms = MsConverter.new
   end
 
+  # Creates  a new MuseScore converter with parameters
   def create
-    @ms_converter = MsConverter.new(ms_converter_params)
+    @converter_ms = MsConverter.new(ms_converter_params)
 
-    if @ms_converter.save
-      redirect_to @ms_converter, notice: "The sheet music #{@ms_converter.name}
+    if @converter_ms.save
+      redirect_to @converter_ms, notice: "The sheet music #{@converter_ms.name}
        has been uploaded."
     else
       render "new"
     end
   end
 
+  # Returns the selected MuseScore converter
   def show
-    @ms_converter = MsConverter.find(params[:id])
+    @converter_ms = MsConverter.find(params[:id])
   end
 
+  # Deletes the selected MuseScore converter
   def destroy
-    @ms_converter = MsConverter.find(params[:id])
-    @ms_converter.destroy
-    redirect_to @ms_converter, notice: "The sheet music #{@ms_converter.name}
+    @converter_ms = MsConverter.find(params[:id])
+    @converter_ms.destroy
+    redirect_to @converter_ms, notice: "The sheet music #{@converter_ms.name}
      has been deleted."
   end
 
