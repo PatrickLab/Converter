@@ -1,8 +1,8 @@
-<% if !@ms_converter.errors.empty? %>
+<% if !@converter_ms.errors.empty? %>
   <div class = "alert alert-error">
 
     <ul>
-      <% @ms_converter.errors.full_messages.each do |msg| %>
+      <% @converter_ms.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
@@ -11,7 +11,7 @@
 <% end %>
 
 <div class = "well">
-  <%= form_for @ms_converter, html: { multipart: true } do |f| %>
+  <%= form_for @converter_ms, html: { multipart: true } do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name %>
     <%= f.label :attachment %>
