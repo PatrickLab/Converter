@@ -1,0 +1,35 @@
+<%= link_to "Back to Index", ms_converters_path %>
+
+<% if !@ms_converter.errors.empty? %>
+  <div class = "alert alert-error">
+
+    <ul>
+      <% @ms_converter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+
+  </div>
+<% end %>
+
+<div class="Show">
+  <table>
+    <% file = @ms_converter.attachment.read %>
+    <% #file = file.chars %>
+    <tr><td></br></td></tr>
+    <tr>
+      <td style="font-size:120%"><strong>Name</strong></td>
+      <td><%= @ms_converter.name %></td>
+    </tr>
+    <tr><td></br></td></tr>
+    <tr>
+      <td valign="top" style="font-size:120%"><strong>File contents</strong></td>
+      <td>
+        <% partIndex = file =~ /<Part>/ %>
+        <% endPartIndex = (file =~ /<\/Part>/) + 7 %>
+        <% subFile = file.slice!(partIndex...endPartIndex) %>
+        <%= subFile %>
+      </td>
+    </tr>
+  </table>
+</div>
