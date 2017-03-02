@@ -2,6 +2,7 @@ module MsConvertersHelper
   # ignore this
   # @ms_converter = MsConverter.find(params[:id])
 
+
   part_exists = true
   part_amount = 0
   part_array = []
