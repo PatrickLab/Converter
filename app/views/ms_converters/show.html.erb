@@ -25,10 +25,58 @@
     <tr>
       <td valign="top" style="font-size:120%"><strong>File contents</strong></td>
       <td>
-        <% partIndex = file =~ /<Part>/ %>
-        <% endPartIndex = (file =~ /<\/Part>/) + 7 %>
-        <% subFile = file.slice!(partIndex...endPartIndex) %>
-        <%= subFile %>
+        <% part_exists = true %>
+        <% part_array = [] %>
+        <% i = 0 %>
+        <% j = 0 %>
+        <% k = 0 %>
+        <% staff_array = [] %>
+        <% sheet_info = Hash.new{|hsh,key| hsh[key] = {}} %>
+
+        <% while (part_exists) do %>
+          <% if ((file =~ /<Part>/) != nil) && ((file =~ /<\/Part>/) != nil) %>
+            <% part_index = (file =~ /<Part>/) %>
+            <% end_part_index = ((file =~ /<\/Part>/) + 7) %>
+            <% sub_file = file.slice!(part_index...end_part_index) %>
+            <% part_array.push(sub_file) %>
+          <% elsif ((file =~ /Part/) == nil) || ((file =~ /<\/Part>/) == nil) %>
+            <% part_exists = false %>
+            <% end %>
+        <% end %>
+
+        <% while i < part_array.length do %>
+          <% staff_exists = true %>
+          <% while staff_exists do %>
+            <% if ((part_array[i] =~ /<Staff id=/) != nil) && ((part_array[i] =~ /<\/Staff>/) != nil) %>
+              <% staff_index = part_array[i] =~ /<Staff id=/ %>
+              <% end_staff_index = (part_array[i] =~ /<\/Staff>/) + 8 %>
+              <% sub_file = part_array[i].slice!(staff_index...end_staff_index) %>
+              <% staff_array.push(sub_file) %>
+            <% elsif ((part_array[i] =~ /<Staff id=/) == nil) || ((part_array[i] =~ /<\/Staff>/) == nil) %>
+              <% staff_exists = false %>
+            <% end %>
+          <% end %>
+
+          <% j = 0 %>
+          <% while j < staff_array.length do %>
+            <% staff_string = staff_array[j] %>
+            <% sheet_info[i].store(j, staff_string[11]) %>
+            <% j += 1 %>
+          <% end %>
+
+          <% k = 0 %>
+          <% while k < staff_array.length do %>
+            <% k += 1 %>
+            <% if k > 1 %>
+              <% staff_array[(staff_array.length - k)].concat(" ") %>
+            <% end %>
+            <% part_array[i].insert(7 , staff_array[(staff_array.length - k)]) %>
+          <% end %>
+          <% staff_array.clear %>
+          <% i += 1 %>
+        <% end %>
+        <%= sheet_info[1] %>
+
       </td>
     </tr>
   </table>
